@@ -90,6 +90,33 @@ build_plot_p1_speed <- function(pokemon_type){
 
 
 #tidy function
+get_p1_type1_counts <-function(){
+  p1_freq_type_1 = useful_data %>% mutate(
+    type1frec = fct_infreq(useful_data$type1),
+  ) %>% select(type1frec)
+  
+  hist<-ggplot(p1_freq_type_1,aes(x=type1frec,y=..count..,fill=factor(..x..)))+geom_bar(aes(y=..count..,group=1))+
+    ggtitle("Pokemon Primary Skill")+
+    guides(fill=guide_legend(title="Primary Type"))+
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),plot.title = element_text(lineheight=1, face="bold"))
+  
+  return(hist)
+}
 
+get_p1_type1_counts()
+
+get_p1_type2_counts <-function(){
+  #tidy function
+  p1_freq_type_2 = useful_data  %>% filter(type2 != "") %>% mutate(
+    type2frec = fct_infreq(type2),
+  ) %>% select(type2frec)
+  
+  hist<-ggplot(p1_freq_type_2,aes(x=type2frec,y=..count..,fill=factor(..x..)))+geom_bar(aes(y=..count..,group=1))+
+    ggtitle("Pokemon Seccond Skill")+
+    guides(fill=guide_legend(title="Seccond Type"))+
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),plot.title = element_text(lineheight=1, face="bold"))
+  
+  return(hist)
+}
 
 
