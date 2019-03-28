@@ -94,7 +94,41 @@ ui <- navbarPage("Shiny app",
                           )
                  ),
                  tabPanel("Power Concentrations",
-                          ##ADDD HERE
+                          ### add plot in ####
+                          sidebarLayout(
+                            sidebarPanel(
+                              textInput("title","Title","Pokemon Attack vs. Defense"),
+                              
+                              checkboxInput("fit","add line of best fit", FALSE),
+                              
+                              sliderInput("weight","Weight",min(na.omit(pokemon$weight_kg)),
+                                          max(na.omit(pokemon$weight_kg)),
+                                          value=c(20,25.5)),
+                              
+                              sliderInput("height","Height",min(na.omit(pokemon$height_m)),
+                                          max(na.omit(pokemon$height_m)),
+                                          value=c(8,8.5)),
+                              
+                              sliderInput("hp","HP value",min(pokemon$hp),max(pokemon$hp),
+                                          value=c(20,35)),
+                              
+                              selectInput("type1","Primary type",
+                                          choices = levels(pokemon$type1),
+                                          multiple = TRUE,
+                                          selected = "grass"),
+                              selectInput("type2","Second type",
+                                          choices = levels(pokemon$type2),
+                                          multiple = TRUE,
+                                          selected = "flying"),
+                              checkboxInput(inputId = "Lengendary",label = "Only for Lengendary",
+                                            FALSE),
+                              colourInput("color","Point Colour",value="yellow")
+                            ),  #sidebarPanel
+                            mainPanel(
+                              # output with plotly version
+                              plotlyOutput("H_W_plot")
+                            ) #mainpanel
+                          )#sidebarlayout
                  )
                  #  titlePanel
 ) # navbarPage
