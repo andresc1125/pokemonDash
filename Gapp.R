@@ -238,11 +238,12 @@ pokemon$type2<-fct_infreq(pokemon$type2)
 pokemon$is_legendary<-factor(pokemon$is_legendary)
 pokemon$generation<-factor(pokemon$generation)
 
-(pie1<-ggplot(pokemon,aes(x=factor(1),stat="bin",fill=generation))
+(pie1<-ggplot(pokemon,aes(x=factor(1),stat="bin",fill=type1))
   +geom_bar(position="fill",color="white")
-  +ggtitle("Lengendary Pokemon by Generation")+xlab("")+ylab("Lengendary")
-  +facet_grid(facets =.~is_legendary)
-  +coord_polar(theta="y"))
+  +ggtitle("Pokemon Weakness by Primary Type and Generation")+xlab("")+ylab("Lengendary")
+  +facet_grid(facets =.~generation)
+  +coord_polar(theta="y")
+  +facet_wrap(~generation,ncol = 3))
 
 
 ## Scatters for Speed and Defense
