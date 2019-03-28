@@ -19,7 +19,7 @@ new_var$generation<-as.factor(new_var$generation)
 new_var$is_legendary<-as.factor(new_var$is_legendary)
 # boxplot
 (boxplot1<-ggplot(new_var,aes(x=variable,y=value,fill=is_legendary))+geom_boxplot(position="dodge")
-                 +ggtitle("Output BoxPlot")+scale_fill_brewer(palette="Greens"))
+                 +ggtitle("Output BoxPlot")+scale_fill_manual(values=c("#FFCC33","#33FF99")))
 
   
 
@@ -30,11 +30,11 @@ new_var$is_legendary<-as.factor(new_var$is_legendary)
 library(reshape2)
 
 ## aim to create dataset with all AGAINST_vars
-against_inf<-useful_data[c( "name","against_bug","against_dark","against_dragon","against_electric","against_fairy",   
+against_inf<-useful_data[c( "name","generation","against_bug","against_dark","against_dragon","against_electric","against_fairy",   
                         "against_fight","against_fire","against_flying","against_ghost","against_grass","against_ground",  
                           "against_ice","against_normal","against_poison","against_psychic","against_rock","against_steel",   
                            "against_water")]
-against_inf[,-1]<-as.data.frame(against_inf[,-1])
+against_inf[,-c(1,2)]<-as.data.frame(against_inf[,-c(1,2)])
 
 # reorder the correlation matrix:
 
@@ -46,7 +46,7 @@ lower_tri<-function(corr){
 }
 
 # preparing data 
-corr<-round(cor(against_inf[,-1]),1)
+corr<-round(cor(against_inf[,-c(1,2)]),1)
 melt_corr<-melt(lower_tri(corr),na.rm = TRUE)
 
 
@@ -67,4 +67,9 @@ melt_corr<-melt(lower_tri(corr),na.rm = TRUE)
  #          colors = brewer.pal(n = 3,name = "RdYlBu")))
 
 
+
+#############make a radar of AGAINST_POWER here #############
+#############################################
+
+ggplot(data=against_inf,aes(x=))
 
