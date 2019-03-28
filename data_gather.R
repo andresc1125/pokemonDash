@@ -2,8 +2,7 @@ library(tidyverse);
 
 raw_data = read.csv("pokemon.csv")
 
-factor(raw_data$pokedex_number)
-useless_columns = c("japanese_name","is_legendary","pokedex_number","percentage_male","experience_growth","base_happiness")
+useless_columns = c("japanese_name","pokedex_number","percentage_male","experience_growth","base_happiness")
 
 #import the data as a tibble
 tb <- as_tibble(raw_data)
@@ -26,6 +25,22 @@ useful_data %>% filter(against_dark == 1)
 
 ##general data for controls
 pokemon_types_type1 = levels(useful_data$type1) 
+
+#filter all the colnames that start with against_ as the have useful information
+colnames_againts_p2_powers = colnames(useful_data %>%  select(starts_with("against_")) )
+
+#base pokemon generatiions
+pokemon_generations = useful_data %>% distinct(generation)
+
+#get min_max power
+
+p2_hp_min_max = list(min=min(useful_data %>% select(hp)), max=max(useful_data %>% select(hp)))
+p2_attack_min_max = list(min=min(useful_data %>% select(sp_attack)), max=max(useful_data %>% select(sp_attack)))
+p2_deffense_min_max = list(min=min(useful_data %>% select(sp_defense)), max=max(useful_data %>% select(sp_defense)))
+p2_speed_min_max = list(min=min(useful_data %>% select(speed)), max=max(useful_data %>% select(speed)))
+
+variable_to = "against_psychic"
+p2_attrib_min_max = list(min=min(useful_data %>% select(variable_to)), max=max(useful_data %>% select(variable_to)))
 
 
 build_plot_p1_hp <- function(pokemon_type){
@@ -74,7 +89,7 @@ build_plot_p1_speed <- function(pokemon_type){
 
 
 
-
+#tidy function
 
 
 
