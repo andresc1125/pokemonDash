@@ -8,6 +8,7 @@
 #
 
 library(shiny)
+library(DT)
 source("data_gather.R")
 
 
@@ -18,5 +19,17 @@ server = shinyServer(function(input, output) {
   output$plot_p1_attack <- renderPlot({build_plot_p1_attack(input$p1_pokemon_type)})
   output$plot_p1_deffense <- renderPlot({build_plot_p1_deffense(input$p1_pokemon_type)})
   output$plot_p1_speed <- renderPlot({build_plot_p1_speed(input$p1_pokemon_type)})
+
   
+  ##render data table ###
+  
+  output$My_Pokemon<-renderDT(
+    pokemon[c(1,38,39,26:29,34:36)], # reactive data 
+    class="display nowrap compact", # style
+    filter="top", # put the column filters 
+    
+    option=list(  # options
+      scrollX=TRUE # allow user to scroll wide tables horizontally
+    ) # close option
+  ) #renderDT
 })
