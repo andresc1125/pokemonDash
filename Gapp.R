@@ -215,14 +215,18 @@ pokemon$type1<-fct_infreq(pokemon$type1)
 (hist3<-ggplot(pokemon,aes(x=type1,y=..count..,fill=factor(..x..)))+geom_bar(aes(y=..count..,group=1))
   +ggtitle("Pokemon Primary Skill")
   +guides(fill=guide_legend(title="Primary Type"))
-  +theme(axis.text.x = element_text(angle = 45, hjust = 1),plot.title = element_text(lineheight=1, face="bold")))
+  +theme(axis.text.x = element_text(angle = 45, hjust = 1),
+         plot.title = element_text(lineheight=1, face="bold"))
+  +xlab("Primary Type Skill Name") + ylab("The Number of Pokemon"))
 
 ## histogram with Secondary Pokemon Type  
 pokemon$type2<-fct_infreq(pokemon$type2)
 (hist4<-ggplot(data=subset(pokemon,!is.na(type2)),aes(x=type2,y=..count..,fill=factor(..x..)))+geom_bar(aes(y=..count..,group=1))
   +ggtitle("Pokemon Secondary Skill")
   +guides(fill=guide_legend(title="Secondary Type"))
-  +theme(axis.text.x = element_text(angle = 45, hjust = 1),plot.title = element_text(lineheight=1, face="bold")))
+  +theme(axis.text.x = element_text(angle = 45, hjust = 1),
+         plot.title = element_text(lineheight=1, face="bold"))
+  +xlab("Secondary Type Skill Name") + ylab("The Number of Pokemon"))
 
 
 
@@ -253,8 +257,11 @@ pokemon$capture_rate<-as.factor(pokemon$capture_rate)
 
 ## Scatter plot with the 2d density estimation of Defense and Speed
 (scatter2<-ggplot(pokemon,aes(x=speed,y=defense,shape=is_legendary,color=is_legendary))
-  +geom_point()
+  +geom_point(shape = 20)
   +stat_density_2d(aes(fill=..level..),geom="polygon")
-  +scale_fill_gradient(low="lightblue", high="black"))
+  +scale_fill_gradient(low="lightblue", high="black")
+  +ggtitle("Density Estimation between Speed and Defense Power")
+  +theme(plot.title = element_text(lineheight=1, face="bold"))
+  +xlab("Pokemon Speed") + ylab("Pokemon Defense Power"))
 
 
