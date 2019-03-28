@@ -27,8 +27,7 @@ new_var$is_legendary<-as.factor(new_var$is_legendary)
 
 ########################################################
 ###############Correlation ######################
-library(ggcorrplot)
-library(RColorBrewer)
+library(reshape2)
 
 ## aim to create dataset with all AGAINST_vars
 against_inf<-useful_data[c( "name","against_bug","against_dark","against_dragon","against_electric","against_fairy",   
@@ -36,11 +35,36 @@ against_inf<-useful_data[c( "name","against_bug","against_dark","against_dragon"
                           "against_ice","against_normal","against_poison","against_psychic","against_rock","against_steel",   
                            "against_water")]
 against_inf[,-1]<-as.data.frame(against_inf[,-1])
+
+# reorder the correlation matrix:
+
+
+# Get lower triangle of the correlation matrix
+lower_tri<-function(corr){
+  corr[upper.tri(corr)] <- NA
+  return(corr)
+}
+
+# preparing data 
 corr<-round(cor(against_inf[,-1]),1)
+melt_corr<-melt(lower_tri(corr),na.rm = TRUE)
+
+
+
 ## to comput the matrix of correlation p_value
 # p.mat = cor_pmat(against_inf[,-1])
 
-## visualize 
-(ggcorrplot(corr,hc.order = TRUE,method = "circle",type = "lower",insig = "blank",
-           colors = brewer.pal(n = 3,name = "RdYlBu")))
+
+## visualize by ggplot
+(corr1<-ggplot(data=melt_corr,aes(x=Var1,y=Var2,fill=value))+geom_tile(color="white")
+               +scale_fill_gradient2(low = c("#FF66FF"), high = c("#999FFF"), mid = c("#003399"))
+               +theme_minimal()  # to minimal theme
+               +theme(axis.text = element_text(angle = 45, vjust = 1,size = 12, hjust = 1))
+               +labs(title="Correlation Matrix of Against Power")) 
+                                                              
+
+#(ggcorrplot(corr,hc.order = TRUE,method = "circle",type = "lower",insig = "blank",
+ #          colors = brewer.pal(n = 3,name = "RdYlBu")))
+
+
 
