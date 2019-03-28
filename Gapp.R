@@ -188,3 +188,69 @@ server<-function(input,output){
 # Run the application 
 shinyApp(ui = ui, server = server)
 
+
+
+######## this is the ggplot graphs which might be helpful#######
+library(ggplot2)
+library(forcats)
+
+pokemon <- read.csv("Desktop/Statistics Master /Tidying R/pokemonPJ/pokemon.csv")
+attach(pokemon)
+pokemon<-as.data.frame(pokemon)
+pokemon$is_legendary<-as.factor(pokemon$is_legendary)
+
+
+## histgrom with height/weight by IS_LENGENDARY 
+(hist1<-ggplot(pokemon,aes(x=height_m,color=is_legendary,fill=is_legendary))
+  +geom_histogram(aes(y=..density..),position="identity", alpha=0.5)
+  +geom_density(alpha=0.6)+scale_color_brewer(palette="Paired")
+  +theme_classic())
+
+(hist2<-ggplot(pokemon,aes(x=weight_kg,color=is_legendary,fill=is_legendary))
+  +geom_histogram(aes(y=..density..),position = "identity",alpha=0.5,binwidth = 70)
+  +geom_density(alpha=0.6))
+
+## histogram with Primiary Pokemon Type
+pokemon$type1<-fct_infreq(pokemon$type1)
+(hist3<-ggplot(pokemon,aes(x=type1,y=..count..,fill=factor(..x..)))+geom_bar(aes(y=..count..,group=1))
+  +theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+
+## histogram with Secondary Pokemon Type  
+pokemon$type2<-fct_infreq(pokemon$type2)
+(hist4<-ggplot(data=subset(pokemon,!is.na(type2)),aes(x=type2,y=..count..,fill=factor(..x..)))+geom_bar(aes(y=..count..,group=1))
+  +theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+
+
+
+
+## generate a new varaibels about the number of skill type
+
+
+## pie chart (need to change the title from 0/1, to YES/NO)
+pokemon$is_legendary<-factor(pokemon$is_legendary)
+pokemon$generation<-factor(pokemon$generation)
+
+(pie1<-ggplot(pokemon,aes(x=factor(1),stat="bin",fill=generation))
+  +geom_bar(position="fill",color="white")
+  +ggtitle("Lengendary Pokemon by Generation")+xlab("")+ylab("Lengendary")
+  +facet_grid(facets =.~is_legendary)
+  +coord_polar(theta="y"))
+
+
+## Scatters for Speed and Defense
+pokemon$hp<-as.factor(pokemon$hp)
+pokemon$capture_rate<-as.factor(pokemon$capture_rate)
+
+(scatter1<-ggplot(pokemon,aes(x=speed,y=defense,shape=is_legendary,color=is_legendary))
+  +geom_point()
+  +geom_smooth(method = lm,se=TRUE,fullrange=FALSE,level=0.95)
+  +scale_color_manual(values=c('#999999','#E69F00')))
+
+
+## Scatter plot with the 2d density estimation of Defense and Speed
+(scatter2<-ggplot(pokemon,aes(x=speed,y=defense,shape=is_legendary,color=is_legendary))
+  +geom_point()
+  +stat_density_2d(aes(fill=..level..),geom="polygon")
+  +scale_fill_gradient(low="lightblue", high="black"))
+
+
