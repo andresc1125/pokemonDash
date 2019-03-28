@@ -28,8 +28,19 @@ new_var$is_legendary<-as.factor(new_var$is_legendary)
 ########################################################
 ###############Correlation ######################
 library(ggcorrplot)
+library(RColorBrewer)
 
 ## aim to create dataset with all AGAINST_vars
-against_inf<-useful_data[,grep("^[against]", names(useful_data), value=TRUE)]
+against_inf<-useful_data[c( "name","against_bug","against_dark","against_dragon","against_electric","against_fairy",   
+                        "against_fight","against_fire","against_flying","against_ghost","against_grass","against_ground",  
+                          "against_ice","against_normal","against_poison","against_psychic","against_rock","against_steel",   
+                           "against_water")]
+against_inf[,-1]<-as.data.frame(against_inf[,-1])
+corr<-round(cor(against_inf[,-1]),1)
+## to comput the matrix of correlation p_value
+# p.mat = cor_pmat(against_inf[,-1])
 
-ggcorrplot(, method = "circle)
+## visualize 
+(ggcorrplot(corr,hc.order = TRUE,method = "circle",type = "lower",insig = "blank",
+           colors = brewer.pal(n = 3,name = "RdYlBu")))
+
