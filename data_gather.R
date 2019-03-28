@@ -149,8 +149,6 @@ corr<-round(cor(data_for_corr_against),1)
 melt_corr<-melt(lower_tri(corr),na.rm = TRUE)
 
 
-
-
 ## visualize by ggplot
 (corr1<-ggplot(data=melt_corr,aes(x=Var1,y=Var2,fill=value))+geom_tile(color="white")
   +scale_fill_gradient2(low = c("#FF66FF"), high = c("#999FFF"), mid = c("#003399"))
@@ -160,6 +158,17 @@ melt_corr<-melt(lower_tri(corr),na.rm = TRUE)
 
 
 
+
+
+##
+new_var<-melt(useful_data,id_vars="names",measure.vars = c("defense","attack","sp_defense","sp_attack","hp","speed"))
+new_var<-as.data.frame(new_var)
+
+new_var$generation<-as.factor(new_var$generation)
+new_var$is_legendary<-as.factor(new_var$is_legendary)
+
+(boxplot1<-ggplot(useful_data,aes(x=variable,y=value,fill=is_legendary))+geom_boxplot(position="dodge")
+  +ggtitle("Output BoxPlot")+scale_fill_manual(values=c("#FFCC33","#33FF99")))
 
 
 
