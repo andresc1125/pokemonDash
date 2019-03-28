@@ -1,9 +1,10 @@
 library(tidyverse);
+library(reshape2)
 
 raw_data = read.csv("pokemon.csv")
 
 useless_columns = c("japanese_name","pokedex_number","percentage_male","experience_growth","base_happiness")
-
+raw_data$is_legendary = factor(raw_data$is_legendary)
 #import the data as a tibble
 tb <- as_tibble(raw_data)
 
@@ -121,5 +122,49 @@ get_p1_type2_counts <-function(){
   
   return(hist)
 }
+
+# Get lower triangle of the correlation matrix
+lower_tri<-function(corr){
+  corr[upper.tri(corr)] <- NA
+  return(corr)
+}
+
+
+
+
+(scatter2<-ggplot(useful_data,aes(x=speed,y=defense,shape=is_legendary,color=is_legendary))
+  +geom_point(shape = 20)
+  +stat_density_2d(aes(fill=..level..),geom="polygon")
+  +scale_fill_gradient(low="lightblue", high="black")
+  +ggtitle("Density Estimation between Speed and Defense Power")
+  +theme(plot.title = element_text(lineheight=1, face="bold"))
+  +xlab("Pokemon Speed") + ylab("Pokemon Defense Power"))
+
+
+
+
+
+data_for_corr_against = useful_data %>% select(colnames_againts_p2_powers) 
+corr<-round(cor(data_for_corr_against),1)
+melt_corr<-melt(lower_tri(corr),na.rm = TRUE)
+
+
+
+
+## visualize by ggplot
+(corr1<-ggplot(data=melt_corr,aes(x=Var1,y=Var2,fill=value))+geom_tile(color="white")
+  +scale_fill_gradient2(low = c("#FF66FF"), high = c("#999FFF"), mid = c("#003399"))
+  +theme_minimal()  # to minimal theme
+  +theme(axis.text = element_text(angle = 45, vjust = 1,size = 12, hjust = 1))
+  +labs(title="Correlation Matrix of Against Power")) 
+
+
+
+
+
+
+
+
+
 
 
