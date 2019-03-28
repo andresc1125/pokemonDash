@@ -92,6 +92,9 @@ ui <- navbarPage("Shiny app",
                               )
                             )
                           )
+                 ),
+                 tabPanel("Power Concentrations",
+                          ##ADDD HERE
                  )
                  #  titlePanel
 ) # navbarPage
