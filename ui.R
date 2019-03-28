@@ -38,5 +38,12 @@ ui <- navbarPage("Shiny app",
                             )
                             
                           )
-                 ) #  titlePanel
+                 ), #  titlePanel
+                 
+                 # CHOOSE YOUR POKEMON by 4 requests 
+                 tabsetPanel(type="tabs",
+                             tabPanel("Overview",
+                                      h2("Pokemon Basic Data"),
+                                      DT::dataTableOutput("My_Pokemon")) #tabpanel
+                 ) #tabsetPanel
 ) # navbarPage
