@@ -25,6 +25,7 @@ useful_data %>% filter(against_dark == 1)
 
 ##general data for controls
 pokemon_types_type1 = levels(useful_data$type1) 
+pokemon_types_type2 = levels(useful_data$type2) 
 
 #filter all the colnames that start with against_ as the have useful information
 colnames_againts_p2_powers = colnames(useful_data %>%  select(starts_with("against_")) )
@@ -39,12 +40,16 @@ p2_attack_min_max = list(min=min(useful_data %>% select(sp_attack)), max=max(use
 p2_deffense_min_max = list(min=min(useful_data %>% select(sp_defense)), max=max(useful_data %>% select(sp_defense)))
 p2_speed_min_max = list(min=min(useful_data %>% select(speed)), max=max(useful_data %>% select(speed)))
 
+p3_weight_min_max = list(min=min(useful_data %>% na.omit() %>% select(weight_kg)), max=max(useful_data %>% na.omit() %>% select(weight_kg)))
+p2_height_min_max = list(min=min(useful_data %>% na.omit() %>%select(height_m)), max=max(useful_data %>% na.omit() %>% select(height_m)))
+
+
 variable_to = "against_psychic"
 p2_attrib_min_max = list(min=min(useful_data %>% select(variable_to)), max=max(useful_data %>% select(variable_to)))
 
 
 build_plot_p1_hp <- function(pokemon_type){
-  data_to_plot_p1_hp =  useful_data %>% filter(type1 ==pokemon_type)
+  data_to_plot_p1_hp =  useful_data %>% filter(type1 == pokemon_type)
   plot_hp_filtered = ggplot(data = data_to_plot_p1_hp,  aes(x=hp)) +
     geom_histogram(aes(y=..density..),fill="red", alpha=0.8, bins = 10,color="black") +
     geom_density(alpha=.3, fill="white") + 
@@ -102,8 +107,6 @@ get_p1_type1_counts <-function(){
   
   return(hist)
 }
-
-get_p1_type1_counts()
 
 get_p1_type2_counts <-function(){
   #tidy function
