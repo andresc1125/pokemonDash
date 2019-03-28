@@ -213,12 +213,16 @@ pokemon$is_legendary<-as.factor(pokemon$is_legendary)
 ## histogram with Primiary Pokemon Type
 pokemon$type1<-fct_infreq(pokemon$type1)
 (hist3<-ggplot(pokemon,aes(x=type1,y=..count..,fill=factor(..x..)))+geom_bar(aes(y=..count..,group=1))
-  +theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+  +ggtitle("Pokemon Primary Skill")
+  +guides(fill=guide_legend(title="Primary Type"))
+  +theme(axis.text.x = element_text(angle = 45, hjust = 1),plot.title = element_text(lineheight=1, face="bold")))
 
 ## histogram with Secondary Pokemon Type  
 pokemon$type2<-fct_infreq(pokemon$type2)
 (hist4<-ggplot(data=subset(pokemon,!is.na(type2)),aes(x=type2,y=..count..,fill=factor(..x..)))+geom_bar(aes(y=..count..,group=1))
-  +theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+  +ggtitle("Pokemon Secondary Skill")
+  +guides(fill=guide_legend(title="Secondary Type"))
+  +theme(axis.text.x = element_text(angle = 45, hjust = 1),plot.title = element_text(lineheight=1, face="bold")))
 
 
 
