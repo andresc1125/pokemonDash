@@ -101,32 +101,30 @@ ui <- navbarPage("Shiny app",
                               
                               checkboxInput("fit","add line of best fit", FALSE),
                               
-                              sliderInput("weight","Weight",min(na.omit(pokemon$weight_kg)),
-                                          max(na.omit(pokemon$weight_kg)),
-                                          value=c(20,25.5)),
+                              sliderInput("p3_weight_filter","Weight",min(na.omit(p3_weight_min_max$min)),
+                                          max(na.omit(p3_weight_min_max$max)),
+                                          value=c(p3_weight_min_max$min,p3_weight_min_max$max)),
                               
-                              sliderInput("height","Height",min(na.omit(pokemon$height_m)),
-                                          max(na.omit(pokemon$height_m)),
-                                          value=c(8,8.5)),
+                              sliderInput("p3_height_filter","Height",min(na.omit(p2_height_min_max$min)),
+                                          max(na.omit(p2_height_min_max$max)),
+                                          value=c(p2_height_min_max$min,p2_height_min_max$max)),
                               
-                              sliderInput("hp","HP value",min(pokemon$hp),max(pokemon$hp),
-                                          value=c(20,35)),
+                              sliderInput("p3_hp_filter","HP value",p2_hp_min_max$min,p2_hp_min_max$max,
+                                          value=c(p2_hp_min_max$min,p2_hp_min_max$max)),
                               
-                              selectInput("type1","Primary type",
-                                          choices = levels(pokemon$type1),
-                                          multiple = TRUE,
-                                          selected = "grass"),
-                              selectInput("type2","Second type",
-                                          choices = levels(pokemon$type2),
-                                          multiple = TRUE,
-                                          selected = "flying"),
-                              checkboxInput(inputId = "Lengendary",label = "Only for Lengendary",
-                                            FALSE),
-                              colourInput("color","Point Colour",value="yellow")
-                            ),  #sidebarPanel
+                              selectInput("p3_type1_filter","Primary type",
+                                          choices = pokemon_types_type1,
+                                          selected = pokemon_types_type1[1]),
+                              selectInput("p3_type2_filter","Second type",
+                                          choices = pokemon_types_type2,
+                                          selected = pokemon_types_type2[1]),
+                              checkboxInput(inputId = "p3_is_legendary",label = "Only for Lengendary",
+                                            FALSE)
+                              ),  #sidebarPanel
                             mainPanel(
+                              "hola"
                               # output with plotly version
-                              plotlyOutput("H_W_plot")
+                              #plotlyOutput("H_W_plot")
                             ) #mainpanel
                           )#sidebarlayout
                  )
