@@ -35,15 +35,63 @@ ui <- navbarPage("Shiny app",
                               column(6,
                                      plotOutput("plot_p1_speed")
                               )
+                            ),
+                            fluidRow(
+                              column(6,
+                                     plotOutput("plot_p1_hist_t1")
+                              ),
+                              column(6,
+                                     plotOutput("plot_p1_hist_t2")
+                              )
                             )
                             
                           )
-                 ), #  titlePanel
-                 
-                 # CHOOSE YOUR POKEMON by 4 requests 
-                 tabsetPanel(type="tabs",
-                             tabPanel("Overview",
-                                      h2("Pokemon Basic Data"),
-                                      DT::dataTableOutput("My_Pokemon")) #tabpanel
-                 ) #tabsetPanel
+                 ),
+                 tabPanel("Weak Map",
+                          fluidPage(
+                            fluidRow(
+                              column(2,"",
+                                     selectInput("p2_weak_against", label ="Select Against ability", 
+                                                 choices =colnames_againts_p2_powers,
+                                                 selected = colnames_againts_p2_powers[1])
+                              ),
+                              column(2,"",
+                                     selectInput("p2_pokemon_generations", label ="Select Generation", 
+                                                 choices = pokemon_generations,
+                                                 selected = pokemon_generations[1])
+                              ),
+                              column(4,"",
+                                     sliderInput("p2_against_slide", label = "Damage Range", min = p2_attrib_min_max$min, 
+                                                 max =  p2_attrib_min_max$max, value =c(p2_attrib_min_max$min, p2_attrib_min_max$max)  )
+                              )
+                            ),
+                            fluidRow(
+                              column(3,"",
+                                     sliderInput("p2_power_range", label = "Hp Range", min = p2_hp_min_max$min, 
+                                                 max =  p2_hp_min_max$max, value =c(p2_hp_min_max$min, p2_hp_min_max$max)  )
+                              ),
+                              column(3,"",
+                                     sliderInput("p2_attack_min_max", label = "Attack Range", min = p2_attack_min_max$min, 
+                                                 max =  p2_attack_min_max$max, value =c(p2_attack_min_max$min, p2_attack_min_max$max)  )
+                              ),
+                              column(3,"",
+                                     sliderInput("p2_deffense_min_max", label = "Deffense Range", min = p2_deffense_min_max$min, 
+                                                 max =  p2_deffense_min_max$max, value =c(p2_deffense_min_max$min, p2_deffense_min_max$max)  )
+                              ),
+                              column(3,"",
+                                     sliderInput("p2_speed_min_max", label = "Speed Range", min = p2_speed_min_max$min, 
+                                                 max =  p2_speed_min_max$max, value =c(p2_speed_min_max$min, p2_speed_min_max$max)  )
+                              )
+                            ),
+                            fluidRow(
+                              column(6,
+                                     "Graph"
+                              ),
+                              column(6,
+                                     "Graph"
+                              )
+                            )
+                          )
+                 )
+                 #  titlePanel
 ) # navbarPage
