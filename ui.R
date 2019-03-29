@@ -84,11 +84,13 @@ ui <- navbarPage("Shiny app",
                               )
                             ),
                             fluidRow(
-                              column(6,
-                                     "Graph"
-                              ),
-                              column(6,
-                                     "Graph"
+                              column(12,
+                                     plotOutput("p2_box_plot")
+                              )
+                            ),
+                            fluidRow(
+                              column(12,
+                                     plotOutput("p2_pie_plot")
                               )
                             )
                           )
@@ -114,17 +116,26 @@ ui <- navbarPage("Shiny app",
                               
                               selectInput("p3_type1_filter","Primary type",
                                           choices = pokemon_types_type1,
-                                          selected = pokemon_types_type1[1]),
+                                          selected = pokemon_types_type1[2]),
                               selectInput("p3_type2_filter","Second type",
                                           choices = pokemon_types_type2,
-                                          selected = pokemon_types_type2[1]),
+                                          selected = pokemon_types_type2[2]),
                               checkboxInput(inputId = "p3_is_legendary",label = "Only for Lengendary",
                                             FALSE)
                               ),  #sidebarPanel
                             mainPanel(
-                              "hola"
                               # output with plotly version
-                              #plotlyOutput("H_W_plot")
+                              fluidPage(
+                                fluidRow(
+                                  column(10,"",
+                                         plotOutput("p3_plot_scatter")
+                                  )
+                                ),
+                                fluidRow(
+                                  column(10,"",plotOutput("p3_plot_corrplot")
+                                  )
+                                )
+                                )
                             ) #mainpanel
                           )#sidebarlayout
                  )

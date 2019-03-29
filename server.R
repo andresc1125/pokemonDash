@@ -21,4 +21,8 @@ server = shinyServer(function(input, output) {
   output$plot_p1_speed <- renderPlot({build_plot_p1_speed(input$p1_pokemon_type)})
   output$plot_p1_hist_t1 <- renderPlot({get_p1_type1_counts()})
   output$plot_p1_hist_t2 <- renderPlot({get_p1_type2_counts()})
+  output$p3_plot_scatter <- renderPlot({get_p3_plot_scatter()})
+  output$p3_plot_corrplot <- renderPlot({get_p3_corrplot_scatter()})
+  output$p2_box_plot <- renderPlot({get_p2_box_plot()})
+  output$p2_pie_plot <- renderPlot({get_p2_pie_plot()})
 })

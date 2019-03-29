@@ -131,46 +131,74 @@ lower_tri<-function(corr){
 
 
 
-
-(scatter2<-ggplot(useful_data,aes(x=speed,y=defense,shape=is_legendary,color=is_legendary))
-  +geom_point(shape = 20)
-  +stat_density_2d(aes(fill=..level..),geom="polygon")
-  +scale_fill_gradient(low="lightblue", high="black")
-  +ggtitle("Density Estimation between Speed and Defense Power")
-  +theme(plot.title = element_text(lineheight=1, face="bold"))
-  +xlab("Pokemon Speed") + ylab("Pokemon Defense Power"))
-
-
-
-
-
-data_for_corr_against = useful_data %>% select(colnames_againts_p2_powers) 
-corr<-round(cor(data_for_corr_against),1)
-melt_corr<-melt(lower_tri(corr),na.rm = TRUE)
+get_p3_plot_scatter <- function(){
+  
+  p3_plot_scatter<-ggplot(useful_data,aes(x=speed,y=defense,shape=is_legendary,color=is_legendary))+
+    geom_point(shape = 20)+
+    stat_density_2d(aes(fill=..level..),geom="polygon")+
+    scale_fill_gradient(low="lightblue", high="black")+
+    ggtitle("Density Estimation between Speed and Defense Power")+
+    theme(plot.title = element_text(lineheight=1, face="bold"))+
+    xlab("Pokemon Speed") + ylab("Pokemon Defense Power")
+  
+  return (p3_plot_scatter)
+}
 
 
-## visualize by ggplot
-(corr1<-ggplot(data=melt_corr,aes(x=Var1,y=Var2,fill=value))+geom_tile(color="white")
-  +scale_fill_gradient2(low = c("#FF66FF"), high = c("#999FFF"), mid = c("#003399"))
-  +theme_minimal()  # to minimal theme
-  +theme(axis.text = element_text(angle = 45, vjust = 1,size = 12, hjust = 1))
-  +labs(title="Correlation Matrix of Against Power")) 
+
+
+
+get_p3_corrplot_scatter <- function()
+{
+  data_for_corr_against = useful_data %>% select(colnames_againts_p2_powers) 
+  corr<-round(cor(data_for_corr_against),1)
+  melt_corr<-melt(lower_tri(corr),na.rm = TRUE)
+  
+  
+  ## visualize by ggplot
+  corr1<-ggplot(data=melt_corr,aes(x=Var1,y=Var2,fill=value))+geom_tile(color="white")+
+    scale_fill_gradient2(low = c("#FF66FF"), high = c("#999FFF"), mid = c("#003399"))+
+    theme_minimal()+
+    theme(axis.text = element_text(angle = 45, vjust = 1,size = 12, hjust = 1))+
+    labs(title="Correlation Matrix of Against Power")
+  
+  return(corr1)
+}
 
 
 
 
 
 ##
-new_var<-melt(useful_data,id_vars="names",measure.vars = c("defense","attack","sp_defense","sp_attack","hp","speed"))
-new_var<-as.data.frame(new_var)
 
-new_var$generation<-as.factor(new_var$generation)
-new_var$is_legendary<-as.factor(new_var$is_legendary)
+get_p2_box_plot <- function ()
+{
+  new_var<-melt(useful_data,id_vars="names",measure.vars = c("defense","attack","sp_defense","sp_attack","hp","speed"))
+  new_var<-as.data.frame(new_var)
+  
+  new_var$generation<-as.factor(new_var$generation)
+  new_var$is_legendary<-as.factor(new_var$is_legendary)
+  
+  boxplot1<-ggplot(new_var,aes(x=variable,y=value,fill=is_legendary))+geom_boxplot(position="dodge")+
+    ggtitle("Output BoxPlot")+scale_fill_manual(values=c("#FFCC33","#33FF99"))
+  
+  return(boxplot1)
+}
 
-(boxplot1<-ggplot(useful_data,aes(x=variable,y=value,fill=is_legendary))+geom_boxplot(position="dodge")
-  +ggtitle("Output BoxPlot")+scale_fill_manual(values=c("#FFCC33","#33FF99")))
 
 
+get_p2_pie_plot<- function()
+{
+  
+  pie1<-ggplot(useful_data,aes(x=factor(1),stat="bin",fill=type1))+
+    geom_bar(position="fill",color="white")+
+    ggtitle("Pokemon Weakness by Primary Type and Generation")+xlab("")+ylab("Lengendary")+
+    facet_grid(facets =.~generation)+
+    coord_polar(theta="y")+
+    facet_wrap(~generation,ncol = 7)
+  
+  return (pie1)
+}
 
 
 
