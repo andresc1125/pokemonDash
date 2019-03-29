@@ -1,11 +1,12 @@
 library(ggplot2)
 library(reshape2)
-
+library(tidyverse)
 pokemon<-read_csv("~/Desktop/Statistics Master /Tidying R/pokemonPJ/pokemon.csv")
 useless_columns = c("japanese_name","pokedex_number","percentage_male","experience_growth","base_happiness")
 
 #remove columns we dont care about
-useful_data = tb %>%select(-one_of(useless_columns))
+
+useful_data = pokemon %>%select(-one_of(useless_columns))
 
 
 # check the vars names and prepare for boxplot colunmns
