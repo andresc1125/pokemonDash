@@ -1,0 +1,35 @@
+---
+title: "Web Documentation"
+author: "PokemonTeam"
+date: "3/29/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##*Overview*
+
+Welcome to the Pokemon World! In this app, we offer a full-scale visualized analysis of all seven generations of 801 Pokemon anime _(Data Source:Kaggle and other follow-up information from https://serebii.net)._  
+
+##Tabs and Graphs
+
+### Tab 1: Base States Densities
+Browsing this tab, the users will obtain information about Pokemon Primary/Second Skill from the last two graphs on the web bottom. They can also get information about how the Pokemon Health, Attack, Defense and Speed are changed by selecting differnet skills. 
+
+_For example, those Pokemon who use Bug has less health point (weaker) than those who use dragon (see in First Figure in Base Stats)_.  
+
+### Tab 2: Weak Map
+
+In order to let users feel flexible to compare Pokemon characters, we offer this *Weak Map* analyses. Users could see Pokemon Powers by following their own preferences, from selecting Against Ability/Generation to changing the range of Pokemon Fight Features. Users' selection determine the output in both Boxplot and Pie chart simultaneously. 
+
+_e.g. In the case of other conditions remain unchanged, if the user change Pokemon Generation from 1 to 2, users can see Pokemon Fight Power in boxplot becomes relatively stronger. Specifically, the Legendary Pokemon are stronger than those are not. Moreover,the changes in the pie chaart are mainly determined by the Fight Features_.
+
+### Tab 3: Power Concentrations
+
+A 2d density plot is shown in this tab, it helps on analysing the relationship between Pokemon Speed and Defense Power. The 2d density plot avoid overlapping problem and it divides plot area into a multitude view by contour. By this, users are able to see whether their preferable Pokemon are Powerful or not (also grouped by Legendary(Y/N)). Moreover, the Matrix Plot presents correlation among 18 Against Power. which _helps users to forcast whether a Water skill Pokemon is more likely to win a fight with a Grass feature Pokemon than a Flying one_.
+
+
+
+
