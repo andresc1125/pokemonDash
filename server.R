@@ -21,8 +21,30 @@ server = shinyServer(function(input, output) {
   output$plot_p1_speed <- renderPlot({build_plot_p1_speed(input$p1_pokemon_type)})
   output$plot_p1_hist_t1 <- renderPlot({get_p1_type1_counts()})
   output$plot_p1_hist_t2 <- renderPlot({get_p1_type2_counts()})
-  output$p3_plot_scatter <- renderPlot({get_p3_plot_scatter()})
-  output$p3_plot_corrplot <- renderPlot({get_p3_corrplot_scatter()})
-  output$p2_box_plot <- renderPlot({get_p2_box_plot()})
-  output$p2_pie_plot <- renderPlot({get_p2_pie_plot()})
+  output$p3_plot_scatter <- renderPlot({get_p3_plot_scatter(input$p3_weight_filter,
+                                                            input$p3_height_filter,
+                                                            input$p3_hp_filter,
+                                                            input$p3_type1_filter
+                                                            )})
+  output$p3_plot_corrplot <- renderPlot({get_p3_corrplot_scatter(input$p3_weight_filter,
+                                                                 input$p3_height_filter,
+                                                                 input$p3_hp_filter,
+                                                                 input$p3_type1_filter
+  )})
+  output$p2_box_plot <- renderPlot({get_p2_box_plot(input$p2_weak_against,
+                                                    input$p2_pokemon_generations,
+                                                    input$p2_against_slide,
+                                                    input$p2_power_range,
+                                                    input$p2_attack_min_max,
+                                                    input$p2_deffense_min_max,
+                                                    input$p2_speed_min_max
+  )})
+  output$p2_pie_plot <- renderPlot({get_p2_pie_plot(
+                                input$p2_weak_against,
+                                input$p2_against_slide,
+                                input$p2_power_range,
+                                input$p2_attack_min_max,
+                                input$p2_deffense_min_max,
+                                input$p2_speed_min_max
+  )})
 })

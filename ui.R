@@ -119,9 +119,7 @@ ui <- navbarPage("Shiny app",
                                           selected = pokemon_types_type1[2]),
                               selectInput("p3_type2_filter","Second type",
                                           choices = pokemon_types_type2,
-                                          selected = pokemon_types_type2[2]),
-                              checkboxInput(inputId = "p3_is_legendary",label = "Only for Lengendary",
-                                            FALSE)
+                                          selected = pokemon_types_type2[2])
                               ),  #sidebarPanel
                             mainPanel(
                               # output with plotly version

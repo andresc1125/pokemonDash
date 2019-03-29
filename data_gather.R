@@ -1,5 +1,7 @@
 library(tidyverse);
 library(reshape2)
+library(dplyr)
+
 
 raw_data = read.csv("pokemon.csv")
 
@@ -131,9 +133,26 @@ lower_tri<-function(corr){
 
 
 
-get_p3_plot_scatter <- function(){
+get_p3_plot_scatter <- function(weigth_filter, height_filter, p3_hp_filter, p3_type1_filter){
   
-  p3_plot_scatter<-ggplot(useful_data,aes(x=speed,y=defense,shape=is_legendary,color=is_legendary))+
+  weight_min=weigth_filter[1]
+  weight_max=weigth_filter[2]
+  height_min=height_filter[1]
+  height_max=height_filter[2]
+  hp_min=p3_hp_filter[1]
+  hp_max=p3_hp_filter[2]
+  type1s=p3_type1_filter
+
+  filtered_data = useful_data  %>% filter(type1== type1s, 
+                                          weight_kg > weight_min, 
+                                          weight_kg < weight_max, 
+                                          height_m > height_min, 
+                                          height_m < height_max,
+                                          hp < hp_max,
+                                          hp > hp_min,)
+  
+  
+  p3_plot_scatter<-ggplot(filtered_data,aes(x=speed,y=defense,shape=is_legendary,color=is_legendary))+
     geom_point(shape = 20)+
     stat_density_2d(aes(fill=..level..),geom="polygon")+
     scale_fill_gradient(low="lightblue", high="black")+
@@ -148,9 +167,25 @@ get_p3_plot_scatter <- function(){
 
 
 
-get_p3_corrplot_scatter <- function()
+get_p3_corrplot_scatter <- function(weigth_filter, height_filter, p3_hp_filter, p3_type1_filter)
 {
-  data_for_corr_against = useful_data %>% select(colnames_againts_p2_powers) 
+  weight_min=weigth_filter[1]
+  weight_max=weigth_filter[2]
+  height_min=height_filter[1]
+  height_max=height_filter[2]
+  hp_min=p3_hp_filter[1]
+  hp_max=p3_hp_filter[2]
+  type1s=p3_type1_filter
+  
+  filtered_data = useful_data  %>% filter(type1== type1s, 
+                                          weight_kg > weight_min,
+                                          weight_kg < weight_max, 
+                                          height_m > height_min,
+                                          height_m < height_max,
+                                          hp < hp_max,
+                                          hp > hp_min)
+  
+  data_for_corr_against = filtered_data %>% select(colnames_againts_p2_powers) 
   corr<-round(cor(data_for_corr_against),1)
   melt_corr<-melt(lower_tri(corr),na.rm = TRUE)
   
@@ -171,9 +206,43 @@ get_p3_corrplot_scatter <- function()
 
 ##
 
-get_p2_box_plot <- function ()
+get_p2_box_plot <- function ( p2_weak_against, p2_pokemon_generation,p2_against_slide,p2_power_range,p2_attack_min_max,p2_deffense_min_max,p2_speed_min_max)
 {
-  new_var<-melt(useful_data,id_vars="names",measure.vars = c("defense","attack","sp_defense","sp_attack","hp","speed"))
+  
+  against_column = p2_weak_against
+  generationp = p2_pokemon_generation
+  damage_taken_min =p2_against_slide[1]
+  damage_taken_max=p2_against_slide[2]
+  
+  hp_min=p2_power_range[1]
+  hp_max=p2_power_range[2]
+  
+  attack_min=p2_attack_min_max[1]
+  attack_max=p2_attack_min_max[2]
+    
+  deffense_min=p2_deffense_min_max[1]
+  deffense_max=p2_deffense_min_max[2]
+    
+  speed_min=p2_speed_min_max[1]
+  speed_max=p2_speed_min_max[2]
+  
+  #useful_data  %>% filter(!!(as.name(against_column)) < damage_taken_max,  !!(as.name(against_column)) > damage_taken_min)
+  #paste(against_column, "<", damage_taken_max)
+  filtered_data = useful_data  %>% filter(!!(as.name(against_column)) < damage_taken_max,  !!(as.name(against_column)) > damage_taken_min,
+                                          generation == generationp, 
+                                          height_m > height_min, 
+                                          height_m < height_max,
+                                          hp < hp_max,
+                                          hp > hp_min,
+                                          sp_attack > attack_min,
+                                          sp_attack < attack_max,
+                                          sp_defense < deffense_max,
+                                          sp_defense > deffense_min,
+                                          speed > speed_min,
+                                          speed < speed_max,
+                                          )
+  
+  new_var<-melt(filtered_data,id_vars="names",measure.vars = c("defense","attack","sp_defense","sp_attack","hp","speed"))
   new_var<-as.data.frame(new_var)
   
   new_var$generation<-as.factor(new_var$generation)
@@ -187,10 +256,42 @@ get_p2_box_plot <- function ()
 
 
 
-get_p2_pie_plot<- function()
+get_p2_pie_plot<- function(p2_weak_against,p2_against_slide,p2_power_range,p2_attack_min_max,p2_deffense_min_max,p2_speed_min_max)
 {
   
-  pie1<-ggplot(useful_data,aes(x=factor(1),stat="bin",fill=type1))+
+  
+  against_column = p2_weak_against
+  damage_taken_min =p2_against_slide[1]
+  damage_taken_max=p2_against_slide[2]
+  
+  hp_min=p2_power_range[1]
+  hp_max=p2_power_range[2]
+  
+  attack_min=p2_attack_min_max[1]
+  attack_max=p2_attack_min_max[2]
+  
+  deffense_min=p2_deffense_min_max[1]
+  deffense_max=p2_deffense_min_max[2]
+  
+  speed_min=p2_speed_min_max[1]
+  speed_max=p2_speed_min_max[2]
+  
+  #useful_data  %>% filter(!!(as.name(against_column)) < damage_taken_max,  !!(as.name(against_column)) > damage_taken_min)
+  #paste(against_column, "<", damage_taken_max)
+  filtered_data = useful_data  %>% filter(!!(as.name(against_column)) < damage_taken_max,  !!(as.name(against_column)) > damage_taken_min,
+                                          height_m > height_min, 
+                                          height_m < height_max,
+                                          hp < hp_max,
+                                          hp > hp_min,
+                                          sp_attack > attack_min,
+                                          sp_attack < attack_max,
+                                          sp_defense < deffense_max,
+                                          sp_defense > deffense_min,
+                                          speed > speed_min,
+                                          speed < speed_max,
+  )
+  
+  pie1<-ggplot(filtered_data,aes(x=factor(1),stat="bin",fill=type1))+
     geom_bar(position="fill",color="white")+
     ggtitle("Pokemon Weakness by Primary Type and Generation")+xlab("")+ylab("Lengendary")+
     facet_grid(facets =.~generation)+
