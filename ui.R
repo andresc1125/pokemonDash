@@ -135,6 +135,11 @@ ui <- navbarPage("Shiny app",
                                 )
                             ) #mainpanel
                           )#sidebarlayout
-                 )
+                 ),
                  #  titlePanel
+                 tabPanel("Data Source",
+                        h2("Pokemon Basic Data"),
+                          DT::dataTableOutput("My_Pokemon")
+                        )
+                  
 ) # navbarPage

@@ -47,4 +47,15 @@ server = shinyServer(function(input, output) {
                                 input$p2_deffense_min_max,
                                 input$p2_speed_min_max
   )})
+  
+  output$My_Pokemon<-renderDT(
+    useful_data[c("name","type1","type2","abilities","attack","defense","hp","speed","height_m","weight_kg","capture_rate","base_total")], # reactive data 
+    class="display nowrap compact", # style
+    filter="top", # put the column filters 
+    
+    option=list(  # options
+      scrollX=TRUE # allow user to scroll wide tables horizontally
+    ) # close option
+  ) #renderDT
+  
 })
