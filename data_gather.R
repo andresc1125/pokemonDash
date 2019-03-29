@@ -230,8 +230,6 @@ get_p2_box_plot <- function ( p2_weak_against, p2_pokemon_generation,p2_against_
   #paste(against_column, "<", damage_taken_max)
   filtered_data = useful_data  %>% filter(!!(as.name(against_column)) < damage_taken_max,  !!(as.name(against_column)) > damage_taken_min,
                                           generation == generationp, 
-                                          height_m > height_min, 
-                                          height_m < height_max,
                                           hp < hp_max,
                                           hp > hp_min,
                                           sp_attack > attack_min,
@@ -279,8 +277,6 @@ get_p2_pie_plot<- function(p2_weak_against,p2_against_slide,p2_power_range,p2_at
   #useful_data  %>% filter(!!(as.name(against_column)) < damage_taken_max,  !!(as.name(against_column)) > damage_taken_min)
   #paste(against_column, "<", damage_taken_max)
   filtered_data = useful_data  %>% filter(!!(as.name(against_column)) < damage_taken_max,  !!(as.name(against_column)) > damage_taken_min,
-                                          height_m > height_min, 
-                                          height_m < height_max,
                                           hp < hp_max,
                                           hp > hp_min,
                                           sp_attack > attack_min,
