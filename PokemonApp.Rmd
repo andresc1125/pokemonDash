@@ -31,6 +31,11 @@ _e.g. In the case of other conditions remain unchanged, if the user change Pokem
 
 A 2d density plot is shown in this tab, it helps on analysing the relationship between Pokemon Speed and Defense Power. The 2d density plot avoid overlapping problem and it divides plot area into a multitude view by contour. By this, users are able to see whether their preferable Pokemon are Powerful or not (also grouped by Legendary(Y/N)). Moreover, the Matrix Plot presents correlation among 18 Against Power. which _helps users to forcast whether a Water skill Pokemon is more likely to win a fight with a Grass feature Pokemon than a Flying one_.
 
+### Tab 4: Data Source
+
+By using this table, users can search their ideal Pokemon by 12 variables, including Pokemon Skill Type, Ability, Power Features and Shape Information (Height and Weight). Users can not only use the feature filters, for skillful users, they can also use Search Box to obtain Pokemon information easily.
+
+
 
 
 
