@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ##*Overview*
 
+
 Welcome to the Pokemon World! In this app, we offer a full-scale visualized analysis of all seven generations of 801 Pokemon anime _(Data Source:Kaggle and other follow-up information from https://serebii.net)._  
 
 ##Tabs and Graphs
