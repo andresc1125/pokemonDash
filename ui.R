@@ -99,9 +99,8 @@ ui <- navbarPage("Shiny app",
                           ### add plot in ####
                           sidebarLayout(
                             sidebarPanel(
-                              textInput("title","Title","Pokemon Attack vs. Defense"),
+                              textInput("title","Title","Pokemon Speed vs. Defense"),
                               
-                              checkboxInput("fit","add line of best fit", FALSE),
                               
                               sliderInput("p3_weight_filter","Weight",min(na.omit(p3_weight_min_max$min)),
                                           max(na.omit(p3_weight_min_max$max)),

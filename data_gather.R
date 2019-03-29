@@ -284,12 +284,12 @@ get_p2_pie_plot<- function(p2_weak_against,p2_against_slide,p2_power_range,p2_at
                                           sp_defense < deffense_max,
                                           sp_defense > deffense_min,
                                           speed > speed_min,
-                                          speed < speed_max,
+                                          speed < speed_max
   )
   
   pie1<-ggplot(filtered_data,aes(x=factor(1),stat="bin",fill=type1))+
     geom_bar(position="fill",color="white")+
-    ggtitle("Pokemon Weakness by Primary Type and Generation")+xlab("")+ylab("Lengendary")+
+    ggtitle("Pokemon Weakness by Primary Type and Generation")+xlab("")+ylab("Generation")+
     facet_grid(facets =.~generation)+
     coord_polar(theta="y")+
     facet_wrap(~generation,ncol = 7)
